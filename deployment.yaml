@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-secrets-operator
+  namespace: external-secrets-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: external-secrets-operator
+  template:
+    metadata:
+      labels:
+        app: external-secrets-operator
+    spec:
+      serviceAccountName: external-secrets-operator
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: external-secrets-operator
+          image: ghcr.io/external-secrets/external-secrets:v0.12.1
+          args:
+            - --metrics-addr=0.0.0.0:8080
+            - --health-addr=0.0.0.0:8081
+          ports:
+            - containerPort: 8080
+            - containerPort: 8081
