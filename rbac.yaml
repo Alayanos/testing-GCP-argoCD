@@ -10,7 +10,7 @@ rules:
       - "services"
       - "podtemplates"
       - "endpoints"
-      - "secrets" # Add this line
+      - "secrets"
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"]
     resources:
@@ -25,6 +25,10 @@ rules:
     verbs: ["get", "list", "watch"]
   - apiGroups: ["flowcontrol.apiserver.k8s.io"]
     resources: ["prioritylevelconfigurations", "flowschemas"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["vpcresources.k8s.aws"] # Add this line
+    resources:
+      - "cninodes" # Add this line
     verbs: ["get", "list", "watch"]
 
 ---
