@@ -28,8 +28,8 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: external-secrets-operator-role
+  name: external-secrets-operator-role # Match the ClusterRole name
 subjects:
-  - kind: ServiceAccount
-    name: argocd-application-controller
-    namespace: argocd-test
+- kind: ServiceAccount
+  name: argocd-application-controller
+  namespace: argocd-test # Namespace of your ArgoCD
