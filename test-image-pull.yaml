@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-image-pull
+  namespace: external-secrets-test
+spec:
+  containers:
+    - name: test-container
+      image: ghcr.io/external-secrets/external-secrets:v0.12.1
+  imagePullSecrets:
+    - name: ghcr-secret
