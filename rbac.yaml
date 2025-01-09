@@ -4,15 +4,8 @@ metadata:
   name: external-secrets-operator-role
 rules:
   - apiGroups: [""]
-        resources:
-      - "pods"
-      - "services"
-      - "podtemplates"
-      - "endpoints" # Add this line for endpoints
-    verbs:
-      - "get"
-      - "list"
-      - "watch"
+    resources: ["pods", "services", "podtemplates", "endpoints"]
+    verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"]
     resources: ["deployments", "replicasets"]
     verbs: ["get", "list", "watch"]
