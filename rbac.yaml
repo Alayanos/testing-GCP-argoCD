@@ -4,14 +4,15 @@ metadata:
   name: external-secrets-operator-role
 rules:
   - apiGroups: [""]
-    resources: ["pods", "services", "podtemplates"] # Add podtemplates here
+    resources: ["pods", "services", "podtemplates"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"]
-    resources: ["deployments"]
+    resources: ["deployments", "replicasets"] # Add replicasets here
     verbs: ["get", "list", "watch"]
   - apiGroups: ["external-secrets.io"]
     resources: ["*"]
     verbs: ["*"]
+
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
