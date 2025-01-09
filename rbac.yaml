@@ -4,7 +4,7 @@ metadata:
   name: external-secrets-operator-role
 rules:
   - apiGroups: [""]
-    resources: ["pods", "services", "podtemplates", "endpoints"]
+    resources: ["resourcequotas","pods", "services", "podtemplates", "endpoints"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"]
     resources: ["deployments", "replicasets"]
