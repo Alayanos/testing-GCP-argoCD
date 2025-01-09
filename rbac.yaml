@@ -4,10 +4,18 @@ metadata:
   name: external-secrets-operator-role
 rules:
   - apiGroups: [""]
-    resources: ["resourcequotas","pods", "services", "podtemplates", "endpoints"]
+    resources:
+      - "resourcequotas"
+      - "pods"
+      - "services"
+      - "podtemplates"
+      - "endpoints"
+      - "secrets" # Add this line
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"]
-    resources: ["deployments", "replicasets"]
+    resources:
+      - "deployments"
+      - "replicasets"
     verbs: ["get", "list", "watch"]
   - apiGroups: ["external-secrets.io"]
     resources: ["*"]
@@ -20,7 +28,6 @@ rules:
     verbs: ["get", "list", "watch"]
 
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -30,6 +37,6 @@ roleRef:
   kind: ClusterRole
   name: external-secrets-operator-role # Match the ClusterRole name
 subjects:
-- kind: ServiceAccount
-  name: argocd-application-controller
-  namespace: argocd-test # Namespace of your ArgoCD
+  - kind: ServiceAccount
+    name: argocd-application-controller
+    namespace: argocd-test # Namespace where ArgoCD is installed
