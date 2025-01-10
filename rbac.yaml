@@ -3,10 +3,20 @@ kind: ClusterRole
 metadata:
   name: argocd-application-controller-role
 rules:
-   - apiGroups: ["acme.cert-manager.io"] # Add permissions for cert-manager challenges
-    resources: ["challenges"]
-  - apiGroups: ["metrics.eks.amazonaws.com"] # Add permissions for the KCM API group
-    resources: ["kcm"]
+  - apiGroups: [""] # Core API group
+    resources:
+      - namespaces
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["acme.cert-manager.io"] # For cert-manager challenges
+    resources:
+      - challenges
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["metrics.eks.amazonaws.com"] # For the KCM API group
+    resources:
+      - kcm
+    verbs: ["get", "list", "watch"]
+  # Keep other rules as they are
+
    # resources:
   #    - resourcequotas
    #   - pods
@@ -16,7 +26,6 @@ rules:
       #- secrets
       #- nodes
       #- limitranges # Added limitranges
-    verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"] # For deployments and replicasets
     resources:
       - deployments
