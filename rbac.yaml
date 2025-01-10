@@ -1,36 +1,51 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: external-secrets-operator-role
+  name: argocd-application-controller-role
 rules:
-  - apiGroups: [""]
+  - apiGroups: [""] # Core API group
     resources:
-      - "resourcequotas"
-      - "pods"
-      - "services"
-      - "podtemplates"
-      - "endpoints"
-      - "secrets"
-      - "nodes" # Add this line
+      - resourcequotas
+      - pods
+      - services
+      - podtemplates
+      - endpoints
+      - secrets
+      - nodes
+      - limitranges # Added limitranges
     verbs: ["get", "list", "watch"]
-  - apiGroups: ["apps"]
+  - apiGroups: ["apps"] # For deployments and replicasets
     resources:
-      - "deployments"
-      - "replicasets"
+      - deployments
+      - replicasets
     verbs: ["get", "list", "watch"]
-  - apiGroups: ["external-secrets.io"]
+  - apiGroups: ["external-secrets.io"] # For External Secrets Operator
     resources: ["*"]
     verbs: ["*"]
-  - apiGroups: ["rbac.authorization.k8s.io"]
+  - apiGroups: ["rbac.authorization.k8s.io"] # For roles
     resources: ["roles"]
     verbs: ["get", "list", "watch"]
-  - apiGroups: ["flowcontrol.apiserver.k8s.io"]
+  - apiGroups: ["flowcontrol.apiserver.k8s.io"] # For priority-level configurations
     resources:
-      - "prioritylevelconfigurations"
-      - "flowschemas"
+      - prioritylevelconfigurations
+      - flowschemas
     verbs: ["get", "list", "watch"]
-  - apiGroups: ["secrets-store.csi.x-k8s.io"]
+  - apiGroups: ["secrets-store.csi.x-k8s.io"] # For secret provider classes
     resources:
-      - "secretproviderclasses"
-      - "secretproviderclasspodstatuses"
-    verbs: ["get", "list
+      - secretproviderclasses
+      - secretproviderclasspodstatuses
+    verbs: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argocd-application-controller-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argocd-application-controller-role
+subjects:
+  - kind: ServiceAccount
+    name: argocd-application-controller
+    namespace: argocd-test
