@@ -3,16 +3,17 @@ kind: ClusterRole
 metadata:
   name: argocd-application-controller-role
 rules:
-  - apiGroups: [""] # Core API group
-    resources:
-      - resourcequotas
-      - pods
-      - services
-      - podtemplates
-      - endpoints
-      - secrets
-      - nodes
-      - limitranges # Added limitranges
+  - apiGroups: ["metrics.eks.amazonaws.com"] # Add permissions for the KCM API group
+    resources: ["kcm"]
+   # resources:
+  #    - resourcequotas
+   #   - pods
+   #   - services
+    #  - podtemplates
+     # - endpoints
+      #- secrets
+      #- nodes
+      #- limitranges # Added limitranges
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"] # For deployments and replicasets
     resources:
