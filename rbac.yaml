@@ -14,6 +14,7 @@ rules:
       - secrets
       - nodes
       - limitranges # Added limitranges
+      - persistentvolumeclaims # Added persistentvolumeclaims
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apps"] # For deployments and replicasets
     resources:
