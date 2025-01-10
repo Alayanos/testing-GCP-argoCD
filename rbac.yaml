@@ -6,6 +6,19 @@ rules:
   - apiGroups: [""] # Core API group
     resources:
       - namespaces
+      - resourcequotas
+      - pods
+      - services
+      - podtemplates
+      - endpoints
+      - secrets
+      - nodes
+      - limitranges # Added limitranges
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"] # For deployments and replicasets
+    resources:
+      - deployments
+      - replicasets
     verbs: ["get", "list", "watch"]
   - apiGroups: ["acme.cert-manager.io"] # For cert-manager challenges
     resources:
@@ -14,22 +27,6 @@ rules:
   - apiGroups: ["metrics.eks.amazonaws.com"] # For the KCM API group
     resources:
       - kcm
-    verbs: ["get", "list", "watch"]
-  # Keep other rules as they are
-
-   # resources:
-  #    - resourcequotas
-   #   - pods
-   #   - services
-    #  - podtemplates
-     # - endpoints
-      #- secrets
-      #- nodes
-      #- limitranges # Added limitranges
-  - apiGroups: ["apps"] # For deployments and replicasets
-    resources:
-      - deployments
-      - replicasets
     verbs: ["get", "list", "watch"]
   - apiGroups: ["external-secrets.io"] # For External Secrets Operator
     resources: ["*"]
